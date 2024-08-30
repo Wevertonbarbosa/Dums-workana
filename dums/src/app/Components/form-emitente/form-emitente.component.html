@@ -1,0 +1,78 @@
+<div class="container-fluid d-flex justify-content-center flex-column align-items-center">
+
+  <div class="container-fluid p-2">
+    <h1 class="text-center">Emitente</h1>
+  </div>
+
+
+  <form class="d-flex col-11 flex-column overflow-auto formEmitente p-3 rounded" style="max-height: 85vh;">
+
+    <div class="container-fluid p-0 row">
+      <div class="container-fluid p-0 col-5">
+        <po-input name="Fantasia" p-clean p-icon="" p-label="Nome Fantasia"></po-input>
+        <po-input name="Social" p-clean p-icon="" p-label="Razão Social"></po-input>
+        <po-input name="inscricaoEstadual" p-clean p-icon="" p-label="Inscrição Estadual">
+        </po-input>
+      </div>
+
+      <div class="container-fluid p-0 col-5">
+        <po-input name="Telefone" p-clean p-icon="" p-label="Telefone">
+        </po-input>
+        <po-input name="codigoRegimeTributario" p-clean p-icon="" p-label="Código Regime Tributário">
+        </po-input>
+        <po-input p-clean name="cnpj" p-mask="99.999.999/9999-99" p-label="CNPJ">
+        </po-input>
+      </div>
+    </div>
+
+
+
+    <div class="container-fluid row p-0">
+      <po-divider p-border-width="string" p-label="Endereço">
+      </po-divider>
+
+      <div class="container-fluid p-0 col-5">
+
+        <po-input name="cep" p-clean p-icon="" p-label="CEP">
+        </po-input>
+
+        <po-input name="logradouro" p-clean p-icon="" p-label="Logradouro">
+        </po-input>
+
+        <po-input name="nomeMunicipio" p-clean p-icon="" p-label="Nome do Município">
+        </po-input>
+
+        <po-input name="numero" p-clean p-icon="" p-label="Número">
+        </po-input>
+
+        <po-input name="numMunicipio" p-clean p-icon="" p-label="Número do Município">
+        </po-input>
+
+
+      </div>
+
+      <div class="container-fluid p-0 col-5">
+
+        <po-input name="bairro" p-clean p-icon="" p-label="Bairro">
+        </po-input>
+        <po-input name="uf" p-clean p-icon="" p-label="UF">
+        </po-input>
+
+        <po-input name="nomePais" p-clean p-icon="" p-label="Nome do País">
+        </po-input>
+
+        <po-input name="numPais" p-clean p-icon="" p-label="Número do País">
+        </po-input>
+      </div>
+
+      <div class="container-fluid p-0 d-flex justify-content-center p-3">
+        <po-button class="buttonLarge" p-label="Confirmar" [p-loading]="false"> </po-button>
+      </div>
+
+
+
+    </div>
+
+  </form>
+
+</div>

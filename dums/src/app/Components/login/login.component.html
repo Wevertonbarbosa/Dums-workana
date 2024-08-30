@@ -1,0 +1,23 @@
+<div class="container-fluid d-flex justify-content-center">
+  <div class="container-fluid d-flex flex-column">
+
+    <div class="container-fluid logo d-flex justify-content-center p-2">
+      <img src="https://www.fetep.org.br/arquivos/empresas/t/14403345658d905d4aaab90.22035831_350x300.jpg"
+        alt="Logo da imagem" class="logo">
+    </div>
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+      <po-email class="w-50" name="email" p-label="Email"> </po-email>
+      <po-password class="w-50" name="password" p-label="Senha"> </po-password>
+    </div>
+    <div class="container-fluid d-flex justify-content-center p-3">
+      <po-button class="buttonLarge" p-label="Confirmar" [p-loading]="false"> </po-button>
+    </div>
+
+    <div class="container-fluid text-center">
+      <p>Ainda não possui uma conta?
+        <a routerLink="/register">Cadastre-se</a>
+      </p>
+    </div>
+
+  </div>
+</div>

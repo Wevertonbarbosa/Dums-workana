@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+.buttonLarge {
+  --background-hover: #01a1e4;
+  --color: #01a1e4;
+  --padding: 0px 200px;
+  --border-color-hover: white;
+  --background-pressed: #1998ce77;
+  ---outline-color-focused: #01a1e4 !important;
+}
+
+.po-input {
+  --color-hover: black !important;
+  --background-hover: #f8f8f8 !important;
+  --background-pressed: #e5ff0077 !important;
+  --outline-color-focused: #01a1e4 !important;
+}
+
+.po-field-icon:not(.po-field-icon-disabled) {
+  color: #01a1e4 !important;
+}
+
+.po-menu-panel {
+  border-right: 1px solid lightgray !important;
+  position: relative !important;
+}
+
+.po-menu-panel-item {
+  border-top: none !important;
+  color: #01a1e4;
+}
