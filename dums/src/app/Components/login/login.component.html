@@ -5,16 +5,59 @@
       <img src="https://www.fetep.org.br/arquivos/empresas/t/14403345658d905d4aaab90.22035831_350x300.jpg"
         alt="Logo da imagem" class="logo">
     </div>
+
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
-      <po-email class="w-50" name="email" p-label="Email"> </po-email>
-      <po-password class="w-50" name="password" p-label="Senha"> </po-password>
+
+      <form [formGroup]="formCheck" class="container-fluid w-50">
+
+
+        <po-email p-clean name="email" required formControlName="email" class="w-50" p-label="Email"> </po-email>
+
+        <div *ngIf="formCheck.controls['email'].invalid && formCheck.controls['email'].touched"
+          class="container-fluid p-0 divErro">
+          <span *ngIf="formCheck.controls['email'].errors?.['required']" class="textBody">
+            Email precisa ser preenchido!
+          </span>
+          <span *ngIf="formCheck.controls['email'].errors?.['email']" class="textBody">
+            Formato de Email inválido!
+          </span>
+        </div>
+
+        <po-password p-clean name="senha" required minlength="8" formControlName="senha" class="w-50" p-label="Senha">
+        </po-password>
+        <div *ngIf="(formCheck.controls['senha']?.invalid && 
+              (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
+          class="container-fluid p-0 divErro">
+
+          <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
+            Senha precisa ser preenchida!
+          </span>
+
+
+          <span
+            *ngIf="formCheck.controls['senha']?.errors?.['minlength'] && !formCheck.controls['senha']?.errors?.['required']"
+            class="textBody">
+            Senha precisa ter no mínimo 8 caracteres!
+          </span>
+
+          <span
+            *ngIf="!formCheck.controls['senha']?.errors?.['minlength'] && formCheck.controls['senha']?.errors?.['invalidPassword']"
+            class="textBody">
+            Senha deve ter uma letra maiúscula e um caractere especial!
+          </span>
+        </div>
+
+      </form>
+
     </div>
+
     <div class="container-fluid d-flex justify-content-center p-3">
-      <po-button class="buttonLarge" p-label="Confirmar" [p-loading]="false"> </po-button>
+      <po-button class="buttonLarge" p-label="Confirmar" [p-disabled]="formCheck.invalid" 
+      [p-loading]="false"> </po-button>
     </div>
 
     <div class="container-fluid text-center">
-      <p>Ainda não possui uma conta?
+      <p class="textBody">Ainda não possui uma conta?
         <a routerLink="/register">Cadastre-se</a>
       </p>
     </div>

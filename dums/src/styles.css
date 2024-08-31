@@ -6,6 +6,7 @@
   --border-color-hover: white;
   --background-pressed: #1998ce77;
   ---outline-color-focused: #01a1e4 !important;
+  --font-family: "Montserrat", sans-serif !important;
 }
 
 .po-input {
@@ -13,6 +14,11 @@
   --background-hover: #f8f8f8 !important;
   --background-pressed: #e5ff0077 !important;
   --outline-color-focused: #01a1e4 !important;
+  --font-family: "Montserrat", sans-serif !important;
+}
+
+.po-label[p-field=true] {
+  --font-family: "Montserrat", sans-serif !important;
 }
 
 .po-field-icon:not(.po-field-icon-disabled) {
@@ -27,4 +33,56 @@
 .po-menu-panel-item {
   border-top: none !important;
   color: #01a1e4;
+}
+
+.textBody {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.textMedium {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.Subheadings {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.po-field-container-content{
+  --padding: 5px 0px 0px !important;
+}
+
+po-input.ng-invalid.ng-touched .po-input{
+  border:1px solid #be3e37  !important;  
+}
+po-input.ng-invalid.ng-touched .po-field-icon{
+  color: #be3e37 !important;
+}
+
+po-login.ng-invalid.ng-touched .po-input{
+  border:1px solid #be3e37  !important;  
+}
+po-login.ng-invalid.ng-touched .po-field-icon{
+  color: #be3e37 !important;
+}
+po-password.ng-invalid.ng-touched .po-field-icon{
+  color: #be3e37 !important;
+}
+po-password.ng-invalid.ng-touched .po-input{
+  border:1px solid #be3e37  !important;
+}
+
+po-email.ng-invalid.ng-touched .po-field-icon{
+  color: #be3e37 !important;
+}
+po-email.ng-invalid.ng-touched .po-input{
+  border:1px solid #be3e37  !important; 
 }

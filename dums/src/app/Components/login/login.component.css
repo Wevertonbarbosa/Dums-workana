@@ -1,5 +1,16 @@
-.logo{
+.logo {
   width: 200px;
   height: 200px;
   object-fit: contain;
+}
+
+.divErro {
+  height: 17px !important;
+  display: flex;
+  align-items: center;
+}
+
+span {
+  color: red;
+  font-size: small;
 }

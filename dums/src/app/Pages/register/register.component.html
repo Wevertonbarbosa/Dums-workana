@@ -1,29 +1,101 @@
 <div class="container-fluid d-flex h-100">
   <div class="container-fluid d-flex flex-column justify-content-center">
     <div class="container-fluid p-0">
-      <h1 class="text-center mb-5">Cadastre-se abaixo</h1>
+      <h1 class="text-center mb-5 Subheadings">Cadastre-se abaixo</h1>
     </div>
 
-    <form class="container-fluid d-flex gap-2 w-75 h-50 p-2">
+    <form [formGroup]="formCheck" class="container-fluid d-flex gap-2 w-75 h-50 p-2 pt-0">
 
       <div class="container-fluid col-6">
-        <po-login p-clean name="login" p-label="Nome"> </po-login>
-        <po-password p-clean name="password" p-label="Senha"> </po-password>
-        <po-input p-clean name="cpf" (ngModelChange)="onInputChange($event)" [p-mask]="mask" p-label="CPF/CNPJ"
-          (p-change-model)="onInputChange($event)" [p-maxlength]="18">
+
+        <po-login p-clean minlength="2" formControlName="nomeCompleto" required name="nomeCompleto"
+          p-label="Nome completo">
+        </po-login>
+        <div
+          *ngIf="(formCheck.controls['nomeCompleto'].invalid && (formCheck.controls['nomeCompleto'].touched || formCheck.controls['nomeCompleto'].dirty))"
+          class="container-fluid p-0 divErro">
+          <span class="textBody" *ngIf="formCheck.controls['nomeCompleto'].errors?.['required']">Nome precisa ser
+            preenchido!</span>
+          <span class="textBody" *ngIf="formCheck.controls['nomeCompleto'].errors?.['minlength']">Nome precisa ser maior
+            que 2 caracteres!</span>
+        </div>
+
+
+
+        <po-password p-clean name="senha" minlength="8" formControlName="senha" p-label="Senha">
+        </po-password>
+        <div *ngIf="(formCheck.controls['senha']?.invalid && 
+              (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
+          class="container-fluid p-0 divErro">
+         
+          <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
+            Senha precisa ser preenchida!
+          </span>
+
+          
+          <span
+            *ngIf="formCheck.controls['senha']?.errors?.['minlength'] && !formCheck.controls['senha']?.errors?.['required']"
+            class="textBody">
+            Senha precisa ter no mínimo 8 caracteres!
+          </span>
+
+          <span
+            *ngIf="!formCheck.controls['senha']?.errors?.['minlength'] && formCheck.controls['senha']?.errors?.['invalidPassword']"
+            class="textBody">
+            Senha deve ter uma letra maiúscula e um caractere especial!
+          </span>
+        </div>
+
+
+        <po-input p-clean name="cnpjCpf" formControlName="cnpjCpf" p-mask="999.999.999-99" p-label="CPF/CNPJ"
+          minlength="11">
         </po-input>
+
+        <div *ngIf="formCheck.controls['cnpjCpf'].invalid && formCheck.controls['cnpjCpf'].touched"
+          class="container-fluid p-0 divErro">
+          <span *ngIf="formCheck.controls['cnpjCpf'].errors?.['required']" class="textBody">
+            CPF/CNPJ precisa ser preenchido!
+          </span>
+          <span *ngIf="formCheck.controls['cnpjCpf'].errors?.['minlength']" class="textBody">
+            CPF são 11 digitos, CNPJ são 14 digitos!
+          </span>
+        </div>
       </div>
 
       <div class="container-fluid col-6">
-        <po-email p-clean name="input" p-label="Email"> </po-email>
-        <po-input name="Telefone" p-clean p-icon="po-icon po-icon-telephone" p-mask="(99) 99999-9999" p-label="Nome">
+
+        <po-email p-clean name="email" formControlName="email" p-label="Email">
+        </po-email>
+        <div *ngIf="formCheck.controls['email'].invalid && formCheck.controls['email'].touched"
+          class="container-fluid p-0 divErro">
+          <span *ngIf="formCheck.controls['email'].errors?.['required']" class="textBody">
+            Email precisa ser preenchido!
+          </span>
+          <span *ngIf="formCheck.controls['email'].errors?.['email']" class="textBody">
+            Formato de Email inválido!
+          </span>
+        </div>
+
+        <po-input name="fone" p-clean p-icon="po-icon po-icon-telephone" p-mask="(99) 99999-9999" p-label="fone"
+          formControlName="fone">
         </po-input>
+        <div *ngIf="formCheck.controls['fone'].invalid && formCheck.controls['fone'].touched"
+          class="container-fluid p-0 divErro">
+          <span *ngIf="formCheck.controls['fone'].errors?.['required']" class="textBody">
+            Telefone precisa ser preenchido!
+          </span>
+          <span *ngIf="formCheck.controls['fone'].errors?.['minlength']" class="textBody">
+            Telefone precisa ter 11 caracteres!
+          </span>
+        </div>
+
       </div>
     </form>
 
     <div class="container-fluid d-flex justify-content-center">
 
-      <po-button class="buttonLarge" p-label="Confirmar" [p-loading]="false"> </po-button>
+      <po-button class="buttonLarge" (p-click)="sendForm()" p-label="Confirmar" [p-disabled]="formCheck.invalid"
+        [p-loading]="checkLoading"> </po-button>
 
     </div>
 
