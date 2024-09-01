@@ -1,3 +1,14 @@
 .formEmitente {
   background: #8080801a
 }
+
+span {
+  color: red;
+  font-size: small;
+}
+
+.divErro {
+  height: 17px !important;
+  display: flex;
+  align-items: center;
+}
