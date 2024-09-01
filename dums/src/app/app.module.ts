@@ -1,6 +1,11 @@
-import { HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +20,8 @@ import { MenuComponent } from './Components/menu/menu.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.component';
 
+import { CookieService } from 'ngx-cookie-service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +30,7 @@ import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.
     RegisterComponent,
     MenuComponent,
     HomeComponent,
-    FormEmitenteComponent
+    FormEmitenteComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,11 +40,12 @@ import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.
     FormsModule,
     PoModule,
     RouterModule.forRoot([]),
-    PoTemplatesModule
+    PoTemplatesModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
+    CookieService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

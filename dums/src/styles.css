@@ -56,33 +56,50 @@
   font-style: normal;
 }
 
-.po-field-container-content{
+.po-field-container-content {
   --padding: 5px 0px 0px !important;
 }
 
-po-input.ng-invalid.ng-touched .po-input{
-  border:1px solid #be3e37  !important;  
+po-input.ng-invalid.ng-touched .po-input {
+  border: 1px solid #be3e37 !important;
 }
-po-input.ng-invalid.ng-touched .po-field-icon{
+
+po-input.ng-invalid.ng-touched .po-field-icon {
   color: #be3e37 !important;
 }
 
-po-login.ng-invalid.ng-touched .po-input{
-  border:1px solid #be3e37  !important;  
-}
-po-login.ng-invalid.ng-touched .po-field-icon{
-  color: #be3e37 !important;
-}
-po-password.ng-invalid.ng-touched .po-field-icon{
-  color: #be3e37 !important;
-}
-po-password.ng-invalid.ng-touched .po-input{
-  border:1px solid #be3e37  !important;
+po-login.ng-invalid.ng-touched .po-input {
+  border: 1px solid #be3e37 !important;
 }
 
-po-email.ng-invalid.ng-touched .po-field-icon{
+po-login.ng-invalid.ng-touched .po-field-icon {
   color: #be3e37 !important;
 }
-po-email.ng-invalid.ng-touched .po-input{
-  border:1px solid #be3e37  !important; 
+
+po-password.ng-invalid.ng-touched .po-field-icon {
+  color: #be3e37 !important;
+}
+
+po-password.ng-invalid.ng-touched .po-input {
+  border: 1px solid #be3e37 !important;
+}
+
+po-email.ng-invalid.ng-touched .po-field-icon {
+  color: #be3e37 !important;
+}
+
+po-email.ng-invalid.ng-touched .po-input {
+  border: 1px solid #be3e37 !important;
+}
+
+.po-radio input[type=radio]:checked {
+  background-color: white;
+  color: #01a1e4;
+  border-color: #01a1e4;
+}
+
+po-radio {
+  --color-checked: #01a1e4;
+  --shadow-color-hover: lightgray;
+  --color-hover: #01a1e4;
 }

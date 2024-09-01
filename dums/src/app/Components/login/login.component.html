@@ -52,14 +52,18 @@
     </div>
 
     <div class="container-fluid d-flex justify-content-center p-3">
-      <po-button class="buttonLarge" p-label="Confirmar" [p-disabled]="formCheck.invalid" 
-      [p-loading]="false"> </po-button>
+      <po-button class="buttonLarge" p-label="Confirmar" [p-disabled]="formCheck.invalid" [p-loading]="checkLoading"
+        (p-click)="sendLogin()"> </po-button>
     </div>
 
     <div class="container-fluid text-center">
       <p class="textBody">Ainda não possui uma conta?
         <a routerLink="/register">Cadastre-se</a>
       </p>
+    </div>
+
+    <div class="po-row d-flex justify-content-end pt-2">
+      <po-toaster class="po-md-6" [p-hide]="hideToast" [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>
 
   </div>

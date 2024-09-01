@@ -3,12 +3,13 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  NgForm,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { RegisteredService } from '../../Services/registered.service';
-import { HttpHeaders } from '@angular/common/http';
+import { PoRadioGroupOption, PoToasterType } from '@po-ui/ng-components';
+import { NewUser } from '../../Interface/new-user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,14 +17,21 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  public mask: string = '999.999.999-99';
-
+  public labelCpfCnpj = 'CPF*';
   public checkLoading: boolean = false;
   public formCheck!: FormGroup;
+  public cnpjCpfMask = '999.999.999-99';
+  public hideToast = true;
+  public msgToast = '';
+  public type: PoToasterType = PoToasterType.Success;
 
   ngOnInit(): void {}
 
-  constructor(private fb: FormBuilder, private service: RegisteredService) {
+  constructor(
+    private fb: FormBuilder,
+    private service: RegisteredService,
+    private router: Router
+  ) {
     this.formCheck = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(2)]],
       senha: [
@@ -31,8 +39,9 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.minLength(8), this.passwordValidator],
       ],
       cnpjCpf: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       fone: ['', [Validators.required, Validators.minLength(11)]],
+      choose: ['1'],
     });
   }
 
@@ -48,46 +57,76 @@ export class RegisterComponent implements OnInit {
     return null;
   }
 
-  // onInputChange(event: any) {
-  //   //EM BREVE AJUSTAR A MASCARA PARA CORRIGIR
-  //   // const rawValue = this.formCheck.get('cpf')?.value.replace(/\D/g, '');
-  //   if (event.length == 11) {
-  //     this.mask = '999.999.999-99';
-  //   } else if (event.length == 12) {
-  //     this.mask = '99.999.999/9999-99';
-  //   }
-  // }
-
-  // LIMPAR FORMULARIO QUANDO CLICAR NO BTN
-  // clearForm() {
-  //   this.formCheck.reset();
-  // }
-
   sendForm() {
     try {
       this.checkLoading = true;
-
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Accept: '*/*',
-      });
+      let value: NewUser = {
+        nomeCompleto: this.formCheck.get('nomeCompleto')?.value,
+        senha: this.formCheck.get('senha')?.value,
+        cnpjCpf: this.formCheck.get('cnpjCpf')?.value,
+        email: this.formCheck.get('email')?.value,
+        fone: this.formCheck.get('fone')?.value,
+      };
 
       if (this.formCheck.valid) {
-        this.service.postData(this.formCheck.value).subscribe({
+        this.service.postData(value).subscribe({
           next: (resp) => {
             console.log(resp);
+
+            this.formCheck.reset();
+            this.msgToast = 'Inscrição realizada';
+            this.hideToast = false;
+
+            setTimeout(() => {
+              this.hideToast = true;
+              this.router.navigate(['/login']);
+            }, 3000);
           },
           error: (error) => {
             console.error('Erro ao registrar usuário:', error);
-            alert('Erro ao registrar usuário. Tente novamente.');
+
+            this.type = PoToasterType.Error;
+            this.msgToast = 'Erro ao registrar o usuário!';
+            this.hideToast = false;
+
+            setTimeout(() => {
+              this.hideToast = true;
+            }, 5000);
           },
         });
       }
     } catch (error) {
       console.error('Erro ao enviar o formulário:', error);
+
+      this.type = PoToasterType.Error;
+      this.msgToast = 'Erro ao enviar o formulário!';
+      this.hideToast = false;
+
+      setTimeout(() => {
+        this.hideToast = true;
+      }, 5000);
     } finally {
-      this.formCheck.reset();
-      this.checkLoading = false;
+      setTimeout(() => {
+        this.checkLoading = false;
+        this.formCheck.patchValue({ choose: '1' });
+      }, 2000);
+    }
+  }
+
+  choose: Array<PoRadioGroupOption> = [
+    { label: 'CPF', value: '1' },
+    { label: 'CNPJ', value: '2' },
+  ];
+
+  changeCpfCnpj(value: string) {
+    if (value == '1') {
+      this.labelCpfCnpj = 'CPF*';
+      this.cnpjCpfMask = '999.999.999-99';
+      this.formCheck.get('cnpjCpf')?.reset();
+    } else {
+      this.labelCpfCnpj = 'CNPJ*';
+      this.cnpjCpfMask = '99.999.999/9999-99';
+      this.formCheck.get('cnpjCpf')?.reset();
     }
   }
 }

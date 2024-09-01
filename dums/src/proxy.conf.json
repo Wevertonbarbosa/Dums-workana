@@ -1,9 +1,0 @@
-{
-  "/api": {
-    "target": "http://18.222.124.46:8080",
-    "secure": false,
-    "changeOrigin": true
-  }
-}
-
-

@@ -8,9 +8,10 @@
 
       <div class="container-fluid col-6">
 
-        <po-login p-clean minlength="2" formControlName="nomeCompleto" required name="nomeCompleto"
-          p-label="Nome completo">
+        <po-login p-clean minlength="2" formControlName="nomeCompleto" p-pattern="^(?=.*\s).{2,}$" required
+          name="nomeCompleto" p-label="Nome completo*">
         </po-login>
+
         <div
           *ngIf="(formCheck.controls['nomeCompleto'].invalid && (formCheck.controls['nomeCompleto'].touched || formCheck.controls['nomeCompleto'].dirty))"
           class="container-fluid p-0 divErro">
@@ -18,21 +19,24 @@
             preenchido!</span>
           <span class="textBody" *ngIf="formCheck.controls['nomeCompleto'].errors?.['minlength']">Nome precisa ser maior
             que 2 caracteres!</span>
+
+          <span class="textBody"
+            *ngIf="!formCheck.controls['nomeCompleto'].errors?.['required'] && !formCheck.controls['nomeCompleto'].errors?.['minlength'] && formCheck.controls['nomeCompleto'].errors?.['pattern']">
+            Precisa de nome e sobrenome!
+          </span>
         </div>
 
-
-
-        <po-password p-clean name="senha" minlength="8" formControlName="senha" p-label="Senha">
+        <po-password p-clean name="senha" minlength="8" formControlName="senha" p-label="Senha*">
         </po-password>
         <div *ngIf="(formCheck.controls['senha']?.invalid && 
               (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
           class="container-fluid p-0 divErro">
-         
+
           <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
             Senha precisa ser preenchida!
           </span>
 
-          
+
           <span
             *ngIf="formCheck.controls['senha']?.errors?.['minlength'] && !formCheck.controls['senha']?.errors?.['required']"
             class="textBody">
@@ -46,8 +50,7 @@
           </span>
         </div>
 
-
-        <po-input p-clean name="cnpjCpf" formControlName="cnpjCpf" p-mask="999.999.999-99" p-label="CPF/CNPJ"
+        <po-input p-clean name="cnpjCpf" [p-mask]="cnpjCpfMask" formControlName="cnpjCpf" [p-label]="labelCpfCnpj"
           minlength="11">
         </po-input>
 
@@ -60,23 +63,28 @@
             CPF são 11 digitos, CNPJ são 14 digitos!
           </span>
         </div>
+
       </div>
 
       <div class="container-fluid col-6">
 
-        <po-email p-clean name="email" formControlName="email" p-label="Email">
+        <po-email p-clean name="email" p-pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          formControlName="email" p-label="Email*">
         </po-email>
         <div *ngIf="formCheck.controls['email'].invalid && formCheck.controls['email'].touched"
           class="container-fluid p-0 divErro">
           <span *ngIf="formCheck.controls['email'].errors?.['required']" class="textBody">
             Email precisa ser preenchido!
           </span>
-          <span *ngIf="formCheck.controls['email'].errors?.['email']" class="textBody">
+
+          <span class="textBody"
+            *ngIf="!formCheck.controls['email'].errors?.['required'] && formCheck.controls['email'].errors?.['pattern']">
             Formato de Email inválido!
           </span>
+
         </div>
 
-        <po-input name="fone" p-clean p-icon="po-icon po-icon-telephone" p-mask="(99) 99999-9999" p-label="fone"
+        <po-input name="fone" p-clean p-icon="po-icon po-icon-telephone" p-mask="(99) 9 9999-9999" p-label="Telefone*"
           formControlName="fone">
         </po-input>
         <div *ngIf="formCheck.controls['fone'].invalid && formCheck.controls['fone'].touched"
@@ -89,6 +97,12 @@
           </span>
         </div>
 
+
+        <po-radio-group class="d-flex justify-content-start" (p-change)="changeCpfCnpj($event)" name="choose"
+          p-label=" " formControlName="choose" [p-columns]="2" [p-options]="choose">
+        </po-radio-group>
+
+
       </div>
     </form>
 
@@ -97,6 +111,11 @@
       <po-button class="buttonLarge" (p-click)="sendForm()" p-label="Confirmar" [p-disabled]="formCheck.invalid"
         [p-loading]="checkLoading"> </po-button>
 
+    </div>
+
+    <div class="po-row d-flex justify-content-end pt-2">
+      <po-toaster class="po-md-6" [p-hide]="hideToast" 
+      [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>
 
 
