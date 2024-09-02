@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PoDividerModule } from '@po-ui/ng-components';
+import { PoDividerModule, PoToasterType } from '@po-ui/ng-components';
+import { DataEmitenteService } from '../../Services/data-emitente.service';
 
 @Component({
   selector: 'app-form-emitente',
@@ -11,7 +12,11 @@ export class FormEmitenteComponent {
   public formCheck!: FormGroup;
   public checkLoading: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  public hideToast = true;
+  public msgToast = '';
+  public type: PoToasterType = PoToasterType.Success;
+
+  constructor(private fb: FormBuilder, private service: DataEmitenteService) {
     this.formCheck = this.fb.group({
       nomeFantasia: ['', [Validators.required, Validators.minLength(2)]],
       razaoSocial: ['', [Validators.required, Validators.minLength(2)]],
@@ -42,5 +47,46 @@ export class FormEmitenteComponent {
 
   sendEmitente() {
     console.log(this.formCheck.value);
+    try {
+      this.checkLoading = true;
+
+      if (this.formCheck.valid) {
+        this.service.postEmitente(this.formCheck.value).subscribe({
+          next: () => {
+            this.formCheck.reset();
+            this.msgToast = 'Emitente registrado';
+            this.hideToast = false;
+
+            setTimeout(() => {
+              this.hideToast = true;
+            }, 3000);
+          },
+          error: (err) => {
+            console.error('Erro ao registrar emitente:', err);
+            this.type = PoToasterType.Error;
+            this.msgToast = 'Erro ao registrar o usuário!';
+            this.hideToast = false;
+
+            setTimeout(() => {
+              this.hideToast = true;
+            }, 5000);
+          },
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao enviar o emitente:', error);
+
+      this.type = PoToasterType.Error;
+      this.msgToast = 'Erro ao enviar o emitente!';
+      this.hideToast = false;
+
+      setTimeout(() => {
+        this.hideToast = true;
+      }, 5000);
+    } finally {
+      setTimeout(() => {
+        this.checkLoading = false;
+      }, 2000);
+    }
   }
 }

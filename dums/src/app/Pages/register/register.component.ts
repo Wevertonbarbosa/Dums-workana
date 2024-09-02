@@ -72,7 +72,6 @@ export class RegisterComponent implements OnInit {
         this.service.postData(value).subscribe({
           next: (resp) => {
             console.log(resp);
-
             this.formCheck.reset();
             this.msgToast = 'Inscrição realizada';
             this.hideToast = false;

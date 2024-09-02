@@ -10,6 +10,8 @@ import { PoFieldModule, PoToasterType } from '@po-ui/ng-components';
 import { PoButtonModule } from '@po-ui/ng-components';
 import { LoggingService } from '../../Services/logging.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { AuthTokenService } from '../../Services/auth-token.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +31,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: LoggingService,
-    private cookieService: CookieService
+    private authTokenService: AuthTokenService,
+    private cookieService: CookieService,
+    private router: Router
   ) {
     this.formCheck = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,11 +67,12 @@ export class LoginComponent implements OnInit {
             const token = value.token;
 
             if (token) {
-              this.cookieService.set('authToken', token, {
-                expires: 2,
-                path: '/',
-              });
+              this.authTokenService.setToken(token);
+            } else {
+              console.log('Token não armazenado nos cookies');
             }
+
+            this.router.navigate(['/dashboard']);
           },
           error: (err) => {
             console.error('Erro na requisição', err);

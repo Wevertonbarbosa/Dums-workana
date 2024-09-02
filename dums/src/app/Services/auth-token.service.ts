@@ -5,15 +5,18 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root',
 })
 export class AuthTokenService {
- 
   constructor(private cookieService: CookieService) {}
- 
+
   getToken(): string | null {
     return this.cookieService.get('authToken');
   }
 
   setToken(token: string) {
-    this.cookieService.set('authToken', token, { expires: 7, path: '/' });
+    this.cookieService.set('authToken', token, {
+      expires: 2,
+      path: '/',
+      secure: true,
+      sameSite: 'Lax',
+    });
   }
-
 }

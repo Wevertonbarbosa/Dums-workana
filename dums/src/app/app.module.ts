@@ -1,11 +1,12 @@
 import {
+  HTTP_INTERCEPTORS,
   HttpClientModule,
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.component';
 
 import { CookieService } from 'ngx-cookie-service';
+import { tokenInterceptor } from './Interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,8 +45,13 @@ import { CookieService } from 'ngx-cookie-service';
     PoTemplatesModule,
   ],
   providers: [
-    provideHttpClient(withInterceptorsFromDi()),
-    CookieService
+    provideHttpClient(
+      withInterceptors([
+        tokenInterceptor
+      ]),
+      withInterceptorsFromDi()
+    ),
+    CookieService,
   ],
   bootstrap: [AppComponent],
 })

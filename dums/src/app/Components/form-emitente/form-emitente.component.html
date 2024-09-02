@@ -64,8 +64,8 @@
           </span>
         </div>
 
-        <po-input name="codigoRegimeTributario" p-clean p-icon="" p-label="Código Regime Tributário*"
-          formControlName="codigoRegimeTributario"></po-input>
+        <po-number name="codigoRegimeTributario" p-clean p-icon="" p-label="Código Regime Tributário*"
+          formControlName="codigoRegimeTributario"></po-number>
         <div
           *ngIf="formCheck.controls['codigoRegimeTributario'].invalid && formCheck.controls['codigoRegimeTributario'].touched"
           class="container-fluid p-0 divErro">
@@ -153,8 +153,8 @@
           </span>
         </div>
 
-        <po-input name="numMunicipio" p-clean p-icon="" p-label="Número do Município*"
-          formControlName="numMunicipio"></po-input>
+        <po-number name="numMunicipio" p-clean p-icon="" p-label="Número do Município*"
+          formControlName="numMunicipio"></po-number>
         <div *ngIf="formCheck.get('endereco.numMunicipio')?.invalid && formCheck.get('endereco.numMunicipio')?.touched"
           class="container-fluid p-0 divErro">
           <span *ngIf="formCheck.get('endereco.numMunicipio')?.errors?.['required']" class="textBody">
@@ -202,7 +202,7 @@
           </span>
         </div>
 
-        <po-input name="numPais" p-clean p-icon="" p-label="Número do País*" formControlName="numPais"></po-input>
+        <po-number name="numPais" p-clean p-icon="" p-label="Número do País*" formControlName="numPais"></po-number>
         <div *ngIf="formCheck.get('endereco.numPais')?.invalid && formCheck.get('endereco.numPais')?.touched"
           class="container-fluid p-0 divErro">
           <span *ngIf="formCheck.get('endereco.numPais')?.errors?.['required']" class="textBody">
@@ -216,11 +216,15 @@
       <div class="container-fluid p-0 d-flex justify-content-center p-3">
         <po-button class="buttonLarge" (p-click)="sendEmitente()" [p-disabled]="formCheck.invalid" p-label="Confirmar" [p-loading]="checkLoading"> </po-button>
       </div>
-
-
-
+    </div>
+    
+    <div class="po-row d-flex justify-content-end pt-2">
+      <po-toaster class="po-md-6" [p-hide]="hideToast" 
+      [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>
 
   </form>
+
+  
 
 </div>
