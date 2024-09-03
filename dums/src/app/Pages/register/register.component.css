@@ -8,3 +8,62 @@ span {
   display: flex;
   align-items: center;
 }
+
+@media (max-width: 767px) {
+  .formDiv {
+    width: 100% !important;
+  }
+
+  .toastMsg {
+    padding: 0px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .inputCpfCnpj {
+    width: 100% !important;
+  }
+
+  .divToast {
+    padding-bottom: 20px;
+  }
+
+  .radioGroup {
+    width: 25% !important;
+    align-items: center !important;
+    justify-content: end !important;
+    padding: 0px !important;
+  }
+
+  .divCpfCnpj {
+    align-items: baseline;
+  }
+
+  .formDiv {
+    padding: 0px !important;
+  }
+
+  .divContent {
+    padding: 0px !important;
+  }
+
+  .divTitle {
+    padding: 10px !important;
+  }
+
+
+  @media (max-width: 425px) {
+    .radioGroup {
+      width: 40% !important;
+    }
+  }
+
+  @media(max-width:350px) {
+    .divToast {
+      padding-bottom: 20px;
+    }
+  }
+
+
+}

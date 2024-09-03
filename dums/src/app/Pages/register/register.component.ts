@@ -67,12 +67,13 @@ export class RegisterComponent implements OnInit {
         email: this.formCheck.get('email')?.value,
         fone: this.formCheck.get('fone')?.value,
       };
-
+      debugger;
       if (this.formCheck.valid) {
         this.service.postData(value).subscribe({
           next: (resp) => {
             console.log(resp);
             this.formCheck.reset();
+            this.type = PoToasterType.Success;
             this.msgToast = 'Inscrição realizada';
             this.hideToast = false;
 
@@ -85,8 +86,18 @@ export class RegisterComponent implements OnInit {
             console.error('Erro ao registrar usuário:', error);
 
             this.type = PoToasterType.Error;
-            this.msgToast = 'Erro ao registrar o usuário!';
             this.hideToast = false;
+
+            //EMAIL E CPF NÃO PODEM SER O MESMO, NECESSÁRIO MENSAGEM DE ERRO CORRETA
+            const existsEmail =
+              'could not execute statement [ERROR: duplicate key value violates unique constraint "usuario_email_key"\n  Detail: Key (email)=(usuario@gmail.com) already exists.] [insert into usuario (cnpj_cpf,email,fone,nome_completo,senha) values (?,?,?,?,?) returning id]; SQL [insert into usuario (cnpj_cpf,email,fone,nome_completo,senha) values (?,?,?,?,?) returning id]; constraint [usuario_email_key]';
+
+            if (error.status === 400 && error.error.mensagem == existsEmail) {
+              this.msgToast = 'Este email já está registrado.';
+            } else {
+              this.msgToast =
+                'Erro na solicitação. Por favor, tente novamente.';
+            }
 
             setTimeout(() => {
               this.hideToast = true;

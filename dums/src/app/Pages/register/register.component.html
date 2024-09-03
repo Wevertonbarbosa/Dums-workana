@@ -1,12 +1,12 @@
 <div class="container-fluid d-flex h-100">
-  <div class="container-fluid d-flex flex-column justify-content-center">
-    <div class="container-fluid p-0">
-      <h1 class="text-center mb-5 Subheadings">Cadastre-se abaixo</h1>
+  <div class="container-fluid d-flex flex-column justify-content-start divContent">
+    <div class="container-fluid pt-1 divTitle">
+      <h1 class="text-center Subheadings">Cadastre-se abaixo</h1>
     </div>
 
-    <form [formGroup]="formCheck" class="container-fluid d-flex gap-2 w-75 h-50 p-2 pt-0">
+    <form [formGroup]="formCheck" class="container-fluid d-flex gap-2 w-75 p-2 pt-0 formDiv">
 
-      <div class="container-fluid col-6">
+      <div class="container-fluid p-1">
 
         <po-login p-clean minlength="2" formControlName="nomeCompleto" p-pattern="^(?=.*\s).{2,}$" required
           name="nomeCompleto" p-label="Nome completo*">
@@ -50,9 +50,16 @@
           </span>
         </div>
 
-        <po-input p-clean name="cnpjCpf" [p-mask]="cnpjCpfMask" formControlName="cnpjCpf" [p-label]="labelCpfCnpj"
-          minlength="11">
-        </po-input>
+        <div class="container-fluid p-0 d-flex divCpfCnpj">
+          <po-input class="col-lg-9 col-md-8 col-sm-8  inputCpfCnpj" p-clean name="cnpjCpf" [p-mask]="cnpjCpfMask"
+            formControlName="cnpjCpf" [p-label]="labelCpfCnpj" minlength="11">
+          </po-input>
+
+          <po-radio-group class="d-flex col-lg-3 col-md-4 col-sm-4 ps-2 radioGroup align-items-end"
+            (p-change)="changeCpfCnpj($event)" name="choose" p-label="" formControlName="choose" [p-columns]="2"
+            [p-options]="choose">
+          </po-radio-group>
+        </div>
 
         <div *ngIf="formCheck.controls['cnpjCpf'].invalid && formCheck.controls['cnpjCpf'].touched"
           class="container-fluid p-0 divErro">
@@ -64,9 +71,9 @@
           </span>
         </div>
 
-      </div>
 
-      <div class="container-fluid col-6">
+
+
 
         <po-email p-clean name="email" p-pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           formControlName="email" p-label="Email*">
@@ -98,24 +105,22 @@
         </div>
 
 
-        <po-radio-group class="d-flex justify-content-start" (p-change)="changeCpfCnpj($event)" name="choose"
-          p-label=" " formControlName="choose" [p-columns]="2" [p-options]="choose">
-        </po-radio-group>
 
 
       </div>
+
     </form>
 
-    <div class="container-fluid d-flex justify-content-center">
+    <div class="container-fluid d-flex justify-content-center pt-3">
 
       <po-button class="buttonLarge" (p-click)="sendForm()" p-label="Confirmar" [p-disabled]="formCheck.invalid"
         [p-loading]="checkLoading"> </po-button>
 
     </div>
 
-    <div class="po-row d-flex justify-content-end pt-2">
-      <po-toaster class="po-md-6" [p-hide]="hideToast" 
-      [p-message]="msgToast" [p-type]="type"></po-toaster>
+    
+    <div class="po-row d-flex justify-content-end pt-2 divToast">
+      <po-toaster class="po-md-6 toastMsg" [p-hide]="hideToast" [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>
 
 

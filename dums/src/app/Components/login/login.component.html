@@ -1,4 +1,4 @@
-<div class="container-fluid d-flex justify-content-center">
+<div class="container-fluid d-flex justify-content-center h-100">
   <div class="container-fluid d-flex flex-column">
 
     <div class="container-fluid logo d-flex justify-content-center p-2">
@@ -6,9 +6,9 @@
         alt="Logo da imagem" class="logo">
     </div>
 
-    <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center divContentForm">
 
-      <form [formGroup]="formCheck" class="container-fluid w-50">
+      <form [formGroup]="formCheck" class="container-fluid w-50 formLogin">
 
 
         <po-email p-clean name="email" required formControlName="email" class="w-50" p-label="Email"> </po-email>
@@ -27,7 +27,7 @@
         </po-password>
         <div *ngIf="(formCheck.controls['senha']?.invalid && 
               (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
-          class="container-fluid p-0 divErro">
+          class="container-fluid p-0 divErro" id="divSpanError">
 
           <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
             Senha precisa ser preenchida!
@@ -51,7 +51,7 @@
 
     </div>
 
-    <div class="container-fluid d-flex justify-content-center p-3">
+    <div class="container-fluid d-flex justify-content-center p-3 ">
       <po-button class="buttonLarge" p-label="Confirmar" [p-disabled]="formCheck.invalid" [p-loading]="checkLoading"
         (p-click)="sendLogin()"> </po-button>
     </div>
@@ -62,8 +62,8 @@
       </p>
     </div>
 
-    <div class="po-row d-flex justify-content-end pt-2">
-      <po-toaster class="po-md-6" [p-hide]="hideToast" [p-message]="msgToast" [p-type]="type"></po-toaster>
+    <div class="po-row d-flex justify-content-end pt-2 divToast">
+      <po-toaster class="po-md-6 toastMsg" [p-hide]="hideToast" [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>
 
   </div>

@@ -22,11 +22,11 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   console.log('Requisição clonada com cabeçalho de autenticação:', authReq);
 
   return next(authReq).pipe(
-    catchError((error) => {
-      if (error.status === 401 || error.status === 403) {
-        router.navigate(['/login']);
-      }
-      return throwError(() => error);
-    })
+    // catchError((error) => {
+    //   if (error.status === 401 || error.status === 403) {
+    //     router.navigate(['/login']);
+    //   }
+    //   return throwError(() => error);
+    // })
   );
 };

@@ -57,7 +57,7 @@
 }
 
 .po-field-container-content {
-  --padding: 5px 0px 0px !important;
+  --padding: 0px 0px 0px !important;
 }
 
 po-input.ng-invalid.ng-touched .po-input {
@@ -102,4 +102,26 @@ po-radio {
   --color-checked: #01a1e4;
   --shadow-color-hover: lightgray;
   --color-hover: #01a1e4;
+}
+
+@media (max-width: 1024px) {
+  .buttonLarge {
+    --padding: 0px 100px;
+  }
+}
+
+@media (max-width: 576px) {
+  .buttonLarge {
+    --padding: 0px 50px;
+  }
+
+  .po-radio-group {
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .po-toaster-inline .po-toaster-actions {
+    padding: 0px !important;
+  }
 }
