@@ -1,14 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PoDividerModule, PoToasterType } from '@po-ui/ng-components';
+import {
+  PoDividerModule,
+  PoModalComponent,
+  PoSearchFilterMode,
+  PoSelectOption,
+  PoTableAction,
+  PoTableColumn,
+  PoTableColumnSpacing,
+  PoTableLiterals,
+  PoToasterType,
+} from '@po-ui/ng-components';
 import { DataEmitenteService } from '../../Services/data-emitente.service';
+import { TableService } from '../../Services/table.service';
 
 @Component({
   selector: 'app-form-emitente',
   templateUrl: './form-emitente.component.html',
   styleUrl: './form-emitente.component.css',
 })
-export class FormEmitenteComponent {
+export class FormEmitenteComponent implements OnInit {
   public formCheck!: FormGroup;
   public checkLoading: boolean = false;
 
@@ -16,7 +27,54 @@ export class FormEmitenteComponent {
   public msgToast = '';
   public type: PoToasterType = PoToasterType.Success;
 
-  constructor(private fb: FormBuilder, private service: DataEmitenteService) {
+  public columns!: Array<PoTableColumn>;
+  public items!: Array<any>;
+  public actions: Array<PoTableAction> = [
+    {
+      label: 'Editar',
+      action: () => {
+        //Logica para os modais
+      },
+      separator: true,
+    },
+    {
+      label: 'Excluir',
+      action: () => {
+      },
+      separator: true,
+      type: 'danger',
+    },
+  ];
+
+  // customLiterals: PoTableLiterals = {
+  //   noColumns: 'Nenhuma definição de colunas',
+  //   noData: 'Nenhum dado encontrado',
+  //   noVisibleColumn: 'Nenhuma coluna visível',
+  //   noItem: 'Nenhum item selecionado',
+  //   oneItem: '1 item selecionado',
+  //   multipleItems: 'itens selecionados',
+  //   loadingData: 'Carregando',
+  //   loadMoreData: 'Carregar mais resultados',
+  //   seeCompleteSubtitle: 'Ver legenda completa',
+  //   completeSubtitle: 'Legenda completa',
+  //   columnsManager: 'Gerenciador de colunas',
+  //   bodyDelete: 'Deseja realmente excluir esse item?',
+  //   cancel: 'Cancelar',
+  //   delete: 'Excluir',
+  //   deleteSuccessful: 'Itens removidos com sucesso',
+  //   deleteApiError: 'Ocorreu um erro inesperado, tente novamente mais tarde!',
+  // };
+
+  ngOnInit(): void {
+    this.columns = this.table.getColumns();
+    this.items = this.table.getItems();
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private service: DataEmitenteService,
+    private table: TableService
+  ) {
     this.formCheck = this.fb.group({
       nomeFantasia: ['', [Validators.required, Validators.minLength(2)]],
       razaoSocial: ['', [Validators.required, Validators.minLength(2)]],

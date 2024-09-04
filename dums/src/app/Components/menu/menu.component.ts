@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PoMenuPanelItem } from '@po-ui/ng-components';
+import { PoMenuItem, PoMenuPanelItem } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-menu',
@@ -7,22 +7,28 @@ import { PoMenuPanelItem } from '@po-ui/ng-components';
   styleUrl: './menu.component.css',
 })
 export class MenuComponent {
-  title: string = 'Customers';
+  menuItemSelected: string = '';
 
-  public readonly menuItems: Array<PoMenuPanelItem> = [
+  menus: Array<PoMenuItem> = [
     {
       label: 'Emitente',
-      link: '/dashboard',
-      icon: 'po-icon po-icon-plus',
+      action: this.printMenuAction.bind(this),
+      icon: 'ph ph-user',
+      shortLabel: 'Emitente',
     },
     {
-      label: 'Visualizar Emitente',
-      link: '/login',
-      icon: 'po-icon po-icon-document-double',
+      label: 'Timekeeping',
+      action: this.printMenuAction.bind(this),
+      icon: 'ph ph-clock',
+      shortLabel: 'Timekeeping',
+      // badge: { value: 1 },
     },
+    
   ];
 
-  changeTitle(menu: PoMenuPanelItem) {
-    
+  constructor() {}
+
+  printMenuAction(menu: PoMenuItem) {
+    this.menuItemSelected = menu.label;
   }
 }

@@ -23,6 +23,7 @@ import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.
 
 import { CookieService } from 'ngx-cookie-service';
 import { tokenInterceptor } from './Interceptors/token.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { tokenInterceptor } from './Interceptors/token.interceptor';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

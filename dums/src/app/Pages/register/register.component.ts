@@ -88,15 +88,41 @@ export class RegisterComponent implements OnInit {
             this.type = PoToasterType.Error;
             this.hideToast = false;
 
-            //EMAIL E CPF NÃO PODEM SER O MESMO, NECESSÁRIO MENSAGEM DE ERRO CORRETA
-            const existsEmail =
-              'could not execute statement [ERROR: duplicate key value violates unique constraint "usuario_email_key"\n  Detail: Key (email)=(usuario@gmail.com) already exists.] [insert into usuario (cnpj_cpf,email,fone,nome_completo,senha) values (?,?,?,?,?) returning id]; SQL [insert into usuario (cnpj_cpf,email,fone,nome_completo,senha) values (?,?,?,?,?) returning id]; constraint [usuario_email_key]';
+            if (error.status === 400) {
+              const errorResponse = error.error;
+              if (Array.isArray(errorResponse) && errorResponse.length > 0) {
+                const errorObj = errorResponse.find(
+                  (e: any) => e.campo === 'errorMessage'
+                );
 
-            if (error.status === 400 && error.error.mensagem == existsEmail) {
-              this.msgToast = 'Este email já está registrado.';
+                if (errorObj) {
+                  if (
+                    errorObj.mensagem.includes(
+                      'duplicate key value violates unique constraint "usuario_email_key"'
+                    )
+                  ) {
+                    this.msgToast = 'Este e-mail já está registrado.';
+                  } else if (
+                    errorObj.mensagem.includes(
+                      'duplicate key value violates unique constraint "usuario_cnpj_cpf_key"'
+                    )
+                  ) {
+                    this.msgToast = 'Este CPF já está registrado.';
+                  } else {
+                    this.msgToast =
+                      'Erro ao registrar usuário. Verifique os dados e tente novamente.';
+                  }
+                } else {
+                  this.msgToast =
+                    'Erro ao registrar usuário. Verifique os dados e tente novamente.';
+                }
+              } else {
+                this.msgToast =
+                  'Erro ao registrar usuário. Verifique os dados e tente novamente.';
+              }
             } else {
               this.msgToast =
-                'Erro na solicitação. Por favor, tente novamente.';
+                'Erro na solicitação. Por favor, tente novamente mais tarde.';
             }
 
             setTimeout(() => {

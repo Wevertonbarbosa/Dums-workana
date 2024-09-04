@@ -1,3 +1,8 @@
-<div class="container-fluid p-0">
-  <po-menu-panel [p-menus]="menuItems" p-logo="https://www.fetep.org.br/arquivos/empresas/t/14403345658d905d4aaab90.22035831_350x300.jpg"></po-menu-panel>
+<div class="po-wrapper">
+  <po-menu [p-menus]="menus" [p-filter]="true"  [p-automatic-toggle]="true">
+  </po-menu>
+
+  <po-page-default [p-title]="menuItemSelected">
+  
+  </po-page-default>
 </div>
