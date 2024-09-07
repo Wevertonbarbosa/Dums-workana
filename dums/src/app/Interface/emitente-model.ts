@@ -17,4 +17,7 @@ export interface EmitenteModel {
     numPais: number;
     nomePais: string;
   };
+
+
+
 }

@@ -10,7 +10,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authToken = authTokenService.getToken();
   const urlPath = new URL(req.url).pathname;
-  const requiresAuth = urlPath.includes('/emitente'); 
+  const requiresAuth = urlPath.includes('/emitente');
 
   const authReq =
     authToken && requiresAuth
@@ -19,14 +19,13 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
         })
       : req;
 
-  console.log('Requisição clonada com cabeçalho de autenticação:', authReq);
-
-  return next(authReq).pipe(
+  return next(authReq)
+    .pipe
     // catchError((error) => {
     //   if (error.status === 401 || error.status === 403) {
     //     router.navigate(['/login']);
     //   }
     //   return throwError(() => error);
     // })
-  );
+    ();
 };

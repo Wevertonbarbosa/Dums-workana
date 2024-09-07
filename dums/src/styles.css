@@ -133,6 +133,16 @@ po-radio {
   margin: 0px;
 }
 
+.po-popup .po-item-list__action {
+  color: #198754;
+}
+
+po-popup po-item-list {
+  --color-hover: #198754;
+  --background-hover: #19875947;
+  
+}
+
 @media (max-width: 1024px) {
   .buttonLarge {
     --padding: 0px 100px;
