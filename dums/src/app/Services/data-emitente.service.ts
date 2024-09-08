@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { EmitenteModel } from '../Interface/emitente-model';
 import { Observable } from 'rxjs';
 import { ApiEmitente } from '../Interface/api-emitente';
+import { PutEmitentes } from '../Interface/put-emitentes';
 
 @Injectable({
   providedIn: 'root',
@@ -19,4 +20,13 @@ export class DataEmitenteService {
   getEmitentes(): Observable<ApiEmitente> {
     return this.http.get<ApiEmitente>(`${this.APIuser}emitente`);
   }
+
+  putEmitente(data: PutEmitentes): Observable<any> {
+    return this.http.put<PutEmitentes>(`${this.APIuser}emitente`, data);
+  }
+
+  deleteEmitente(id: number): Observable<any> {
+    return this.http.delete(`${this.APIuser}emitente/${id}`);
+  }
+
 }

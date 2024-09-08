@@ -1,0 +1,212 @@
+<po-modal #updateModal p-title="Editar Emitente" [p-primary-action]="confirmAddEmitente" [p-secondary-action]="cancelModal" p-size="lg">
+  <form [formGroup]="formCheck">
+
+    <po-input p-label="Razão Social" p-clean formControlName="razaoSocial"></po-input>
+
+    <div *ngIf="formCheck.controls['razaoSocial'].invalid && formCheck.controls['razaoSocial'].touched"
+      class="container-fluid p-0 divErro">
+      <span *ngIf="formCheck.controls['razaoSocial'].errors?.['required']" class="textBody">
+        Razão Social precisa ser preenchida!
+      </span>
+      <span *ngIf="formCheck.controls['razaoSocial'].errors?.['minlength']" class="textBody">
+        Razão Social deve ter no mínimo 2 caracteres!
+      </span>
+    </div>
+
+
+    <po-input p-label="Nome Fantasia" p-clean formControlName="nomeFantasia"></po-input>
+
+    <div *ngIf="formCheck.controls['nomeFantasia'].invalid && formCheck.controls['nomeFantasia'].touched"
+      class="container-fluid p-0 divErro">
+      <span *ngIf="formCheck.controls['nomeFantasia'].errors?.['required']" class="textBody">
+        Nome Fantasia precisa ser preenchido!
+      </span>
+      <span *ngIf="formCheck.controls['nomeFantasia'].errors?.['minlength']" class="textBody">
+        Nome Fantasia deve ter no mínimo 2 caracteres!
+      </span>
+    </div>
+
+    <po-input p-label="Inscrição Estadual" p-clean formControlName="inscricaoEstadual"></po-input>
+
+    <div *ngIf="formCheck.controls['inscricaoEstadual'].invalid && formCheck.controls['inscricaoEstadual'].touched"
+      class="container-fluid p-0 divErro">
+      <span *ngIf="formCheck.controls['inscricaoEstadual'].errors?.['required']" class="textBody">
+        Inscrição Estadual precisa ser preenchida!
+      </span>
+      <span *ngIf="formCheck.controls['inscricaoEstadual'].errors?.['minlength']" class="textBody">
+        Inscrição Estadual deve ter no mínimo 2 caracteres!
+      </span>
+    </div>
+
+
+
+    <po-input p-label="Código regime tributário" (p-change)="validateRange('codigoRegimeTributario')" [p-maxlength]="5"
+      p-mask="99999" p-clean formControlName="codigoRegimeTributario"></po-input>
+
+    <div
+      *ngIf="formCheck.controls['codigoRegimeTributario'].invalid && formCheck.controls['codigoRegimeTributario'].touched"
+      class="container-fluid p-0 divErro">
+      <span *ngIf="formCheck.controls['codigoRegimeTributario'].errors?.['required']" class="textBody">
+        Código regime tributário precisa ser preenchido!
+      </span>
+      <span *ngIf="formCheck.controls['codigoRegimeTributario'].errors?.['maxlength']" class="textBody">
+        Código regime tributário deve ser um valor de até 5 dígitos!
+      </span>
+    </div>
+
+
+
+    <po-input p-label="Telefone" p-clean p-mask="(99) 9 9999-9999" formControlName="fone"></po-input>
+
+    <div *ngIf="formCheck.controls['fone'].invalid && formCheck.controls['fone'].touched"
+      class="container-fluid p-0 divErro">
+      <span *ngIf="formCheck.controls['fone'].errors?.['required']" class="textBody">
+        Telefone precisa ser preenchido!
+      </span>
+      <span *ngIf="formCheck.controls['fone'].errors?.['minlength']" class="textBody">
+        Telefone deve ter no mínimo 11 caracteres!
+      </span>
+    </div>
+
+
+
+
+
+
+
+    <div formGroupName="endereco">
+
+      <po-input p-label="Logradouro" p-clean formControlName="logradouro"></po-input>
+      <div *ngIf="formCheck.get('endereco.logradouro')?.invalid && formCheck.get('endereco.logradouro')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.logradouro')?.errors?.['required']" class="textBody">
+          Logradouro precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.logradouro')?.errors?.['minlength']" class="textBody">
+          Logradouro deve ter pelo menos 2 caracteres!
+        </span>
+      </div>
+
+
+
+      <po-input p-label="Número" p-clean formControlName="numero"></po-input>
+      <div *ngIf="formCheck.get('endereco.numero')?.invalid && formCheck.get('endereco.numero')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.numero')?.errors?.['required']" class="textBody">
+          Número precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.numero')?.errors?.['minlength']" class="textBody">
+          Número deve ter pelo menos 1 caractere!
+        </span>
+      </div>
+
+
+
+      <po-input p-label="Bairro" p-clean formControlName="bairro"></po-input>
+      <div *ngIf="formCheck.get('endereco.bairro')?.invalid && formCheck.get('endereco.bairro')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.bairro')?.errors?.['required']" class="textBody">
+          Bairro precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.bairro')?.errors?.['minlength']" class="textBody">
+          Bairro deve ter pelo menos 2 caracteres!
+        </span>
+      </div>
+
+
+
+
+      <po-input p-label="Número Município" (p-change)="validateRange('endereco.nomeMunicipio')" [p-maxlength]="5"
+        p-mask="99999" p-clean formControlName="numMunicipio"></po-input>
+      <div *ngIf="formCheck.get('endereco.numMunicipio')?.invalid && formCheck.get('endereco.numMunicipio')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.numMunicipio')?.errors?.['required']" class="textBody">
+          Número do Município precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.numMunicipio')?.errors?.['maxlength']" class="textBody">
+          Número do Município deve ser um valor de até 5 dígitos!
+        </span>
+      </div>
+
+
+
+
+      <po-input p-label="Nome Município" p-clean formControlName="nomeMunicipio"></po-input>
+      <div *ngIf="formCheck.get('endereco.nomeMunicipio')?.invalid && formCheck.get('endereco.nomeMunicipio')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.nomeMunicipio')?.errors?.['required']" class="textBody">
+          Nome do Município precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.nomeMunicipio')?.errors?.['minlength']" class="textBody">
+          Nome do Município deve ter pelo menos 2 caracteres!
+        </span>
+      </div>
+
+
+
+      <po-input p-label="UF" p-mask="@@" p-clean formControlName="uf"></po-input>
+      <div *ngIf="formCheck.get('endereco.uf')?.invalid && formCheck.get('endereco.uf')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.uf')?.errors?.['required']" class="textBody">
+          UF precisa ser preenchida!
+        </span>
+        <span *ngIf="formCheck.get('endereco.uf')?.errors?.['minlength']" class="textBody">
+          UF deve ter 2 caracteres!
+        </span>
+        <span *ngIf="formCheck.get('endereco.uf')?.errors?.['maxlength']" class="textBody">
+          UF deve ter no máximo 2 caracteres!
+        </span>
+      </div>
+
+
+
+      <po-input p-label="CEP" p-mask="99999-999" p-clean formControlName="cep"></po-input>
+      <div *ngIf="formCheck.get('endereco.cep')?.invalid && formCheck.get('endereco.cep')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.cep')?.errors?.['required']" class="textBody">
+          CEP precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.cep')?.errors?.['minlength']" class="textBody">
+          CEP deve ter 8 dígitos!
+        </span>
+      </div>
+
+
+
+      <po-input p-label="Número do País" (p-change)="validateRange('endereco.numPais')" [p-maxlength]="5" p-mask="99999"
+        p-clean formControlName="numPais"></po-input>
+      <div *ngIf="formCheck.get('endereco.numPais')?.invalid && formCheck.get('endereco.numPais')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.numPais')?.errors?.['required']" class="textBody">
+          Número do País precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.numPais')?.errors?.['maxlength']" class="textBody">
+          Número do País deve ser um valor de até 5 dígitos!
+        </span>
+      </div>
+
+
+
+
+      <po-input p-label="Nome do País" p-clean formControlName="nomePais"></po-input>
+      <div *ngIf="formCheck.get('endereco.nomePais')?.invalid && formCheck.get('endereco.nomePais')?.touched"
+        class="container-fluid p-0 divErro">
+        <span *ngIf="formCheck.get('endereco.nomePais')?.errors?.['required']" class="textBody">
+          Nome do País precisa ser preenchido!
+        </span>
+        <span *ngIf="formCheck.get('endereco.nomePais')?.errors?.['minlength']" class="textBody">
+          Nome do País deve ter pelo menos 2 caracteres!
+        </span>
+      </div>
+
+
+    </div>
+
+
+
+
+
+  </form>
+
+
+</po-modal>

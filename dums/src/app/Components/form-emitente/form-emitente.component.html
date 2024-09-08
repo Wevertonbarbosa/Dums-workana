@@ -2,13 +2,15 @@
 
   <po-table [p-auto-collapse]="true" [p-columns]="columns" [p-hide-columns-manager]="true" [p-hide-table-search]="false"
     [p-items]="showEmitente" p-container="border" [p-striped]="false" [p-actions]="actions" [p-actions-right]="true"
-    [p-text-wrap]="true" [p-height]="400">
+    [p-text-wrap]="true" [p-loading]="loadingTable" [p-height]="400">
   </po-table>
 
   <div class="po-row">
     <po-button class="po-md-3 p-0" p-label="Adicionar Emitente" (p-click)="openModal()"> </po-button>
   </div>
 
+  <app-modal-update (emitenteUpdated)="loadEmitentes()"></app-modal-update>
+  <app-modal-delete (onDelete)="loadEmitentes()"></app-modal-delete>
 
   <po-modal #emitenteModal p-title="Adicionar Emitente" [p-primary-action]="confirmAddEmitente"
     [p-secondary-action]="cancelModal" p-size="lg">
@@ -61,8 +63,8 @@
         </span>
       </div>
 
-      <po-input p-label="Código regime tributário" (p-change)="validateRange('codigoRegimeTributario')" [p-maxlength]="5" p-mask="99999" p-clean
-        formControlName="codigoRegimeTributario"></po-input>
+      <po-input p-label="Código regime tributário" (p-change)="validateRange('codigoRegimeTributario')"
+        [p-maxlength]="5" p-mask="99999" p-clean formControlName="codigoRegimeTributario"></po-input>
 
       <div
         *ngIf="formCheck.controls['codigoRegimeTributario'].invalid && formCheck.controls['codigoRegimeTributario'].touched"
@@ -125,7 +127,8 @@
         </div>
 
 
-        <po-input p-label="Número Município" (p-change)="validateRange('endereco.nomeMunicipio')" [p-maxlength]="5" p-mask="99999" p-clean formControlName="numMunicipio"></po-input>
+        <po-input p-label="Número Município" (p-change)="validateRange('endereco.nomeMunicipio')" [p-maxlength]="5"
+          p-mask="99999" p-clean formControlName="numMunicipio"></po-input>
         <div *ngIf="formCheck.get('endereco.numMunicipio')?.invalid && formCheck.get('endereco.numMunicipio')?.touched"
           class="container-fluid p-0 divErro">
           <span *ngIf="formCheck.get('endereco.numMunicipio')?.errors?.['required']" class="textBody">
@@ -173,7 +176,8 @@
           </span>
         </div>
 
-        <po-input p-label="Número do País" (p-change)="validateRange('endereco.numPais')" [p-maxlength]="5" p-mask="99999" p-clean formControlName="numPais"></po-input>
+        <po-input p-label="Número do País" (p-change)="validateRange('endereco.numPais')" [p-maxlength]="5"
+          p-mask="99999" p-clean formControlName="numPais"></po-input>
         <div *ngIf="formCheck.get('endereco.numPais')?.invalid && formCheck.get('endereco.numPais')?.touched"
           class="container-fluid p-0 divErro">
           <span *ngIf="formCheck.get('endereco.numPais')?.errors?.['required']" class="textBody">

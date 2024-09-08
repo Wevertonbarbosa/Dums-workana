@@ -18,6 +18,8 @@ import { TableService } from '../../Services/table.service';
 import { EmitenteModel } from '../../Interface/emitente-model';
 import { GetEmitentes } from '../../Interface/get-emitentes';
 import { ApiEmitente } from '../../Interface/api-emitente';
+import { ModalUpdateComponent } from '../modal-update/modal-update.component';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-form-emitente',
@@ -27,6 +29,8 @@ import { ApiEmitente } from '../../Interface/api-emitente';
 export class FormEmitenteComponent implements OnInit {
   @ViewChild(PoModalComponent, { static: true })
   emitenteModal!: PoModalComponent;
+  @ViewChild(ModalUpdateComponent) modalUpdateComponent!: ModalUpdateComponent;
+  @ViewChild(ModalDeleteComponent) modalDelete!: ModalDeleteComponent;
 
   public sendEmitentes: EmitenteModel[] = [];
   public showEmitente: GetEmitentes[] = [];
@@ -39,19 +43,26 @@ export class FormEmitenteComponent implements OnInit {
   public msgToast = '';
   public type: PoToasterType = PoToasterType.Success;
 
+  public loadingTable: boolean = false;
+
   public columns!: Array<PoTableColumn>;
   public items: any[] = [];
+
   public actions: Array<PoTableAction> = [
     {
       label: 'Editar',
-      action: () => {
-        //Logica para os modais
+      action: (value: any) => {
+        console.log(value);
+
+        this.openUpdateModal(value);
       },
       separator: true,
     },
     {
       label: 'Excluir',
-      action: () => {},
+      action: (value: any) => {
+        this.modalDelete.open(value.id);
+      },
       separator: true,
       type: 'danger',
     },
@@ -60,6 +71,10 @@ export class FormEmitenteComponent implements OnInit {
   ngOnInit(): void {
     this.columns = this.table.getColumns();
     this.loadEmitentes();
+  }
+
+  openUpdateModal(value: any) {
+    this.modalUpdateComponent.open(value);
   }
 
   constructor(
@@ -103,7 +118,7 @@ export class FormEmitenteComponent implements OnInit {
     console.log(this.formCheck.value);
     try {
       this.checkLoading = true;
-
+      this.loadingTable = true;
       if (this.formCheck.valid) {
         this.service.postEmitente(this.formCheck.value).subscribe({
           next: () => {
@@ -139,6 +154,7 @@ export class FormEmitenteComponent implements OnInit {
       }, 5000);
     } finally {
       setTimeout(() => {
+        this.loadingTable = false;
         this.checkLoading = false;
       }, 2000);
     }
@@ -154,25 +170,23 @@ export class FormEmitenteComponent implements OnInit {
             this.items = [...this.items, newItem];
             this.loadEmitentes();
             this.closeModal();
+
+            this.poNotification.success('Emitente adicionado!');
           },
           error: (err) => {
             console.error('Erro ao enviar Emitente', err);
 
-            setTimeout(() => {
-              this.poNotification.error(
-                'Erro na requisição para envio do emitente!'
-              );
-            }, 5000);
+            this.poNotification.error(
+              'Erro na requisição para envio do emitente!'
+            );
           },
         });
       } else {
         console.log(this.formCheck.value);
 
-        setTimeout(() => {
-          this.poNotification.error(
-            'Por favor, preencha o formulário corretamente.'
-          );
-        }, 5000);
+        this.poNotification.error(
+          'Por favor, preencha o formulário corretamente.'
+        );
       }
     },
     label: 'Confirmar',
@@ -231,9 +245,8 @@ export class FormEmitenteComponent implements OnInit {
       error: (err) => {
         console.error('Erro ao buscar emitentes', err);
         this.hasItems = false;
-        setTimeout(() => {
-          this.poNotification.error('Erro ao buscar emitentes!');
-        }, 5000);
+
+        this.poNotification.error('Erro ao buscar emitentes!');
       },
     });
   }
@@ -241,9 +254,7 @@ export class FormEmitenteComponent implements OnInit {
   validateRange(field: string) {
     const value = this.formCheck.get(field)?.value;
     if (value > 32767) {
-      setTimeout(() => {
-        this.poNotification.error('O valor não pode ser maior que 32767.');
-      }, 5000);
+      this.poNotification.error('O valor não pode ser maior que 32767.');
 
       this.formCheck.get(field)?.setValue(null);
     }

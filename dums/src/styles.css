@@ -25,15 +25,6 @@
   color: #01a1e4 !important;
 }
 
-/* .po-menu-panel {
-  border-right: 1px solid lightgray !important;
-  position: relative !important;
-}
-
-.po-menu-panel-item {
-  border-top: none !important;
-  color: #01a1e4;
-} */
 
 .textBody {
   font-family: "Montserrat", sans-serif;
@@ -112,6 +103,7 @@ po-radio {
   color: #01a1e4 !important;
   --background-color-hover: #6c757d29;
   --background-color-pressed: #6c757d3d;
+  --background-color-actived: #4d4d4d17;
 }
 
 .po-menu-collapse-button-icon {

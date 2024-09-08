@@ -24,6 +24,8 @@ import { FormEmitenteComponent } from './Components/form-emitente/form-emitente.
 import { CookieService } from 'ngx-cookie-service';
 import { tokenInterceptor } from './Interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalUpdateComponent } from './Components/modal-update/modal-update.component';
+import { ModalDeleteComponent } from './Components/modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MenuComponent,
     HomeComponent,
     FormEmitenteComponent,
+    ModalUpdateComponent,
+    ModalDeleteComponent,
   ],
   imports: [
     BrowserModule,

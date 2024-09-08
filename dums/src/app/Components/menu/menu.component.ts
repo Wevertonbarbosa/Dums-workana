@@ -13,17 +13,17 @@ export class MenuComponent {
     {
       label: 'Emitente',
       action: this.printMenuAction.bind(this),
-      icon: 'ph ph-user',
+      link: '/emitente',
+      icon: 'po-icon po-icon-document-filled',
       shortLabel: 'Emitente',
     },
     {
-      label: 'Timekeeping',
+      label: 'Transportadora',
       action: this.printMenuAction.bind(this),
-      icon: 'ph ph-clock',
-      shortLabel: 'Timekeeping',
-      // badge: { value: 1 },
+      link: '/login',
+      icon: 'po-icon po-icon-truck',
+      shortLabel: 'Transportadora',
     },
-    
   ];
 
   constructor() {}

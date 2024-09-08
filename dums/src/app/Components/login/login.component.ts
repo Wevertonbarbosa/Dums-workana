@@ -63,7 +63,6 @@ export class LoginComponent implements OnInit {
       if (this.formCheck.valid) {
         this.service.postLogin(this.formCheck.value).subscribe({
           next: (value) => {
-            console.log(value);
             const token = value.token;
 
             if (token) {
@@ -72,7 +71,7 @@ export class LoginComponent implements OnInit {
               console.log('Token não armazenado nos cookies');
             }
 
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/emitente']);
           },
           error: (err) => {
             console.error('Erro na requisição', err);

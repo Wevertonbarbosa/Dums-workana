@@ -3,7 +3,7 @@ export interface GetEmitentes {
   cnpj: string;
   razaoSocial: string;
   nomeFantasia: string;
-  inscricaoEstadual: number;
+  inscricaoEstadual: string;
   codigoRegimeTributario: number;
   fone: string;
 }
