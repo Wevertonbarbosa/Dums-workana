@@ -12,3 +12,9 @@ span {
   display: flex;
   align-items: center;
 }
+
+@media(max-width:768px) {
+  .divButton {
+    justify-content: center;
+  }
+}

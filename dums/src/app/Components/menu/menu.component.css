@@ -1,3 +1,9 @@
 .sample-menu-header-text-color {
   color: #9da7a9;
 }
+
+@media(max-width:768px) {
+  .pageDefault {
+    display: none;
+  }
+}

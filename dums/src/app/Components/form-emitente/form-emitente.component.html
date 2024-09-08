@@ -1,12 +1,13 @@
 <div class="container-fluid p-0">
 
-  <po-table [p-auto-collapse]="true" [p-columns]="columns" [p-hide-columns-manager]="true" [p-hide-table-search]="false"
-    [p-items]="showEmitente" p-container="border" [p-striped]="false" [p-actions]="actions" [p-actions-right]="true"
-    [p-text-wrap]="true" [p-loading]="loadingTable" [p-height]="400">
+  <po-table 
+  [p-auto-collapse]="true" [p-columns]="columns" [p-hide-columns-manager]="true" [p-hide-table-search]="false"
+  [p-items]="showEmitente" p-container="shadow" [p-striped]="true" [p-actions]="actions" [p-actions-right]="true"
+  [p-text-wrap]="false" [p-loading]="loadingTable" [p-height]="400">
   </po-table>
 
-  <div class="po-row">
-    <po-button class="po-md-3 p-0" p-label="Adicionar Emitente" (p-click)="openModal()"> </po-button>
+  <div class="po-row divButton">
+    <po-button class="p-0 buttonEmitente" p-label="Adicionar Emitente" (p-click)="openModal()"> </po-button>
   </div>
 
   <app-modal-update (emitenteUpdated)="loadEmitentes()"></app-modal-update>

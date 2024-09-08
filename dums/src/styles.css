@@ -9,6 +9,17 @@
   --font-family: "Montserrat", sans-serif !important;
 }
 
+
+.buttonEmitente {
+  --padding: 0px 50px;
+  --background-hover: #01a1e4;
+  --color: #01a1e4;
+  --border-color-hover: white;
+  --background-pressed: #1998ce77;
+  ---outline-color-focused: #01a1e4 !important;
+  --font-family: "Montserrat", sans-serif !important;
+}
+
 .po-input {
   --color-hover: black !important;
   --background-hover: #f8f8f8 !important;
@@ -132,7 +143,34 @@ po-radio {
 po-popup po-item-list {
   --color-hover: #198754;
   --background-hover: #19875947;
-  
+
+}
+
+po-search {
+  --color-hover: #0dcaf0;
+  --background-hover: #fff;
+  --color-focused: #01a1e4;
+}
+
+.po-search .po-search-icon {
+  color: #01a1e4;
+}
+
+.po-button[p-kind=primary] {
+  background-color: #24a51a;
+  --color-hover: #198726;
+  --outline-color-focused: #198726;
+  --color-pressed: #24a51a;
+}
+
+.po-button[p-kind=tertiary] {
+  color: #be3e37;
+  --background-hover: #a90f0f47;
+  --background-pressed: #a90f0f47;
+}
+
+.po-modal-title {
+  font-family: "Montserrat", sans-serif;
 }
 
 @media (max-width: 1024px) {
@@ -155,4 +193,12 @@ po-popup po-item-list {
   .po-toaster-inline .po-toaster-actions {
     padding: 0px !important;
   }
+}
+
+@media screen and (max-width: 1200px) {
+  .po-menu-mobile {
+    color: #01a1e4;
+  }
+
+
 }

@@ -182,8 +182,6 @@ export class FormEmitenteComponent implements OnInit {
           },
         });
       } else {
-        console.log(this.formCheck.value);
-
         this.poNotification.error(
           'Por favor, preencha o formulário corretamente.'
         );
