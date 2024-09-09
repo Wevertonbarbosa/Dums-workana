@@ -17,6 +17,7 @@ export class MenuComponent {
     {
       label: 'Transportadora',
       //Próxima página
+      link: '/emitente',
       icon: 'po-icon po-icon-truck',
       shortLabel: 'Transportadora',
     },
