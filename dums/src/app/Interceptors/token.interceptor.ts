@@ -19,13 +19,12 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
         })
       : req;
 
-  return next(authReq)
-    .pipe
-    // catchError((error) => {
-    //   if (error.status === 401 || error.status === 403) {
-    //     router.navigate(['/login']);
-    //   }
-    //   return throwError(() => error);
-    // })
-    ();
+  return next(authReq).pipe(
+    catchError((error) => {
+      if (error.status === 401 || error.status === 403) {
+        router.navigate(['/login']); 
+      }
+      return throwError(() => error);
+    })
+  );
 };

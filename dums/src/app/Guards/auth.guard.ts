@@ -9,7 +9,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (authTokenService.getToken()) {
     return true;
   } else {
-    console.log('Testando as rotas');
     router.navigate(['login']);
     return false;
   }

@@ -17,4 +17,8 @@ span {
   .divButton {
     justify-content: center;
   }
+
+  .divMain{
+    padding: 10px 0px !important;
+  }
 }
