@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   PoModalAction,
   PoModalComponent,
@@ -7,6 +13,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataEmitenteService } from '../../Services/data-emitente.service';
 import { PutEmitentes } from '../../Interface/put-emitentes';
+import { CepService } from '../../Services/cep.service';
 
 @Component({
   selector: 'app-modal-update',
@@ -25,7 +32,8 @@ export class ModalUpdateComponent {
   constructor(
     private fb: FormBuilder,
     private service: DataEmitenteService,
-    private poNotification: PoNotificationService
+    private poNotification: PoNotificationService,
+    private cepService: CepService
   ) {
     this.formCheck = this.fb.group({
       id: [null],
@@ -109,4 +117,32 @@ export class ModalUpdateComponent {
     label: 'Cancelar',
     danger: true,
   };
+
+  getCep() {
+    const cep = this.formCheck.get('endereco.cep')?.value;
+    if (cep && cep.length === 8) {
+      this.cepService.getCep(cep).subscribe({
+        next: (value) => {
+          if (value.erro) {
+            this.poNotification.error('CEP não encontrado!');
+            this.formCheck.patchValue({ endereco: { cep: '' } });
+          } else {
+            this.formCheck.patchValue({
+              endereco: {
+                logradouro: value.logradouro || '',
+                bairro: value.bairro || '',
+                nomeMunicipio: value.localidade || '',
+                uf: value.uf || '',
+              },
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Erro ao buscar dados do CEP:', err);
+          this.poNotification.error('Erro ao buscar dados do CEP!');
+        },
+      });
+    } else {
+    }
+  }
 }

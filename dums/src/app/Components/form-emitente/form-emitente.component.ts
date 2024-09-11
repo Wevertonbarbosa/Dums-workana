@@ -20,6 +20,7 @@ import { GetEmitentes } from '../../Interface/get-emitentes';
 import { ApiEmitente } from '../../Interface/api-emitente';
 import { ModalUpdateComponent } from '../modal-update/modal-update.component';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
+import { CepService } from '../../Services/cep.service';
 
 @Component({
   selector: 'app-form-emitente',
@@ -52,8 +53,6 @@ export class FormEmitenteComponent implements OnInit {
     {
       label: 'Editar',
       action: (value: any) => {
-        console.log(value);
-
         this.openUpdateModal(value);
       },
       separator: true,
@@ -73,14 +72,11 @@ export class FormEmitenteComponent implements OnInit {
     this.loadEmitentes();
   }
 
-  openUpdateModal(value: any) {
-    this.modalUpdateComponent.open(value);
-  }
-
   constructor(
     private fb: FormBuilder,
     private service: DataEmitenteService,
     private table: TableService,
+    private cepService: CepService,
     private poNotification: PoNotificationService
   ) {
     this.formCheck = this.fb.group({
@@ -114,8 +110,11 @@ export class FormEmitenteComponent implements OnInit {
     });
   }
 
+  openUpdateModal(value: any) {
+    this.modalUpdateComponent.open(value);
+  }
+
   sendEmitente() {
-    
     try {
       this.checkLoading = true;
       this.loadingTable = true;
@@ -253,8 +252,35 @@ export class FormEmitenteComponent implements OnInit {
     const value = this.formCheck.get(field)?.value;
     if (value > 32767) {
       this.poNotification.error('O valor não pode ser maior que 32767.');
-
       this.formCheck.get(field)?.setValue(null);
+    }
+  }
+
+  onCep() {
+    const cep = this.formCheck.get('endereco.cep')?.value;
+    if (cep && cep.length === 8) {
+      this.cepService.getCep(cep).subscribe({
+        next: (value) => {
+          if (value.erro) {
+            this.poNotification.error('CEP não encontrado!');
+            this.formCheck.patchValue({ endereco: { cep: '' } });
+          } else {
+            this.formCheck.patchValue({
+              endereco: {
+                logradouro: value.logradouro || '',
+                bairro: value.bairro || '',
+                nomeMunicipio: value.localidade || '',
+                uf: value.uf || '',
+              },
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Erro ao buscar dados do CEP:', err);
+          this.poNotification.error('Erro ao buscar dados do CEP!');
+        },
+      });
+    } else {
     }
   }
 }

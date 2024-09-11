@@ -1,10 +1,13 @@
 <div class="container-fluid p-0 divMain">
 
-  <po-table 
-  [p-auto-collapse]="true" [p-columns]="columns" [p-hide-columns-manager]="true" [p-hide-table-search]="false"
-  [p-items]="showEmitente" p-container="shadow" [p-striped]="true" [p-actions]="actions" [p-actions-right]="true"
-  [p-infinite-scroll]="true"
-  [p-text-wrap]="false" [p-loading]="loadingTable" [p-height]="400">
+  <div class="container-fluid p-0 p-2">
+    <h1 class="textMedium">Emitente</h1>
+  </div>
+
+
+  <po-table [p-auto-collapse]="true" [p-columns]="columns" [p-hide-columns-manager]="true" [p-hide-table-search]="false"
+    [p-items]="showEmitente" p-container="shadow" [p-striped]="true" [p-actions]="actions" [p-actions-right]="true"
+    [p-infinite-scroll]="true" [p-text-wrap]="false" [p-loading]="loadingTable" [p-height]="400">
   </po-table>
 
   <div class="po-row divButton">
@@ -94,6 +97,18 @@
 
       <div formGroupName="endereco">
 
+
+        <po-input p-label="CEP" p-mask="99999-999" (p-blur)="onCep()" p-clean formControlName="cep"></po-input>
+        <div *ngIf="formCheck.get('endereco.cep')?.invalid && formCheck.get('endereco.cep')?.touched"
+          class="container-fluid p-0 divErro">
+          <span *ngIf="formCheck.get('endereco.cep')?.errors?.['required']" class="textBody">
+            CEP precisa ser preenchido!
+          </span>
+          <span *ngIf="formCheck.get('endereco.cep')?.errors?.['minlength']" class="textBody">
+            CEP deve ter 8 dígitos!
+          </span>
+        </div>
+
         <po-input p-label="Logradouro" p-clean formControlName="logradouro"></po-input>
         <div *ngIf="formCheck.get('endereco.logradouro')?.invalid && formCheck.get('endereco.logradouro')?.touched"
           class="container-fluid p-0 divErro">
@@ -167,16 +182,6 @@
           </span>
         </div>
 
-        <po-input p-label="CEP" p-mask="99999-999" p-clean formControlName="cep"></po-input>
-        <div *ngIf="formCheck.get('endereco.cep')?.invalid && formCheck.get('endereco.cep')?.touched"
-          class="container-fluid p-0 divErro">
-          <span *ngIf="formCheck.get('endereco.cep')?.errors?.['required']" class="textBody">
-            CEP precisa ser preenchido!
-          </span>
-          <span *ngIf="formCheck.get('endereco.cep')?.errors?.['minlength']" class="textBody">
-            CEP deve ter 8 dígitos!
-          </span>
-        </div>
 
         <po-input p-label="Número do País" (p-change)="validateRange('endereco.numPais')" [p-maxlength]="5"
           p-mask="99999" p-clean formControlName="numPais"></po-input>

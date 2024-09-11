@@ -42,7 +42,22 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required]],
       fone: ['', [Validators.required, Validators.minLength(11)]],
       choose: ['1'],
+      confirmSenha: [
+        '',
+        [Validators.required, this.passwordMatchValidator.bind(this)],
+      ],
     });
+  }
+
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const senha = this.formCheck?.get('senha')?.value;
+    const confirmSenha = control.value;
+
+    if (senha && confirmSenha && senha !== confirmSenha) {
+      return { passwordMismatch: true };
+    }
+
+    return null;
   }
 
   passwordValidator(control: AbstractControl): ValidationErrors | null {
@@ -67,11 +82,10 @@ export class RegisterComponent implements OnInit {
         email: this.formCheck.get('email')?.value,
         fone: this.formCheck.get('fone')?.value,
       };
-      debugger;
+
       if (this.formCheck.valid) {
         this.service.postData(value).subscribe({
           next: (resp) => {
-            console.log(resp);
             this.formCheck.reset();
             this.type = PoToasterType.Success;
             this.msgToast = 'Inscrição realizada';
@@ -80,7 +94,7 @@ export class RegisterComponent implements OnInit {
             setTimeout(() => {
               this.hideToast = true;
               this.router.navigate(['/login']);
-            }, 3000);
+            }, 1000);
           },
           error: (error) => {
             console.error('Erro ao registrar usuário:', error);

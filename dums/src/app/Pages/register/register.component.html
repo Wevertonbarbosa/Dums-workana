@@ -26,30 +26,6 @@
           </span>
         </div>
 
-        <po-password p-clean name="senha" minlength="8" formControlName="senha" p-label="Senha*">
-        </po-password>
-        <div *ngIf="(formCheck.controls['senha']?.invalid && 
-              (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
-          class="container-fluid p-0 divErro">
-
-          <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
-            Senha precisa ser preenchida!
-          </span>
-
-
-          <span
-            *ngIf="formCheck.controls['senha']?.errors?.['minlength'] && !formCheck.controls['senha']?.errors?.['required']"
-            class="textBody">
-            Senha precisa ter no mínimo 8 caracteres!
-          </span>
-
-          <span
-            *ngIf="!formCheck.controls['senha']?.errors?.['minlength'] && formCheck.controls['senha']?.errors?.['invalidPassword']"
-            class="textBody">
-            Senha deve ter uma letra maiúscula e um caractere especial!
-          </span>
-        </div>
-
         <div class="container-fluid p-0 d-flex divCpfCnpj">
           <po-input class="col-lg-9 col-md-8 col-sm-8  inputCpfCnpj" p-clean name="cnpjCpf" [p-mask]="cnpjCpfMask"
             formControlName="cnpjCpf" [p-label]="labelCpfCnpj" minlength="11">
@@ -106,6 +82,52 @@
 
 
 
+        <po-password p-clean name="senha" minlength="8" formControlName="senha" p-label="Senha*">
+        </po-password>
+        <div *ngIf="(formCheck.controls['senha']?.invalid && 
+              (formCheck.controls['senha']?.touched || formCheck.controls['senha']?.dirty))"
+          class="container-fluid p-0 divErro">
+
+          <span *ngIf="formCheck.controls['senha']?.errors?.['required']" class="textBody">
+            Senha precisa ser preenchida!
+          </span>
+
+
+          <span
+            *ngIf="formCheck.controls['senha']?.errors?.['minlength'] && !formCheck.controls['senha']?.errors?.['required']"
+            class="textBody">
+            Senha precisa ter no mínimo 8 caracteres!
+          </span>
+
+          <span
+            *ngIf="!formCheck.controls['senha']?.errors?.['minlength'] && formCheck.controls['senha']?.errors?.['invalidPassword']"
+            class="textBody">
+            Senha deve ter uma letra maiúscula e um caractere especial!
+          </span>
+        </div>
+
+        <po-password p-clean name="confirmSenha" formControlName="confirmSenha" p-label="Confirmar Senha*">
+        </po-password>
+
+        <div *ngIf="(formCheck.controls['confirmSenha']?.invalid && 
+    (formCheck.controls['confirmSenha']?.touched || formCheck.controls['confirmSenha']?.dirty))"
+          class="container-fluid p-0 divErro">
+
+          <span *ngIf="formCheck.controls['confirmSenha']?.errors?.['required']" class="textBody">
+            Senha precisa ser preenchida!
+          </span>
+
+          <span *ngIf="
+    formCheck.get('confirmSenha')?.touched &&
+    formCheck.get('confirmSenha')?.dirty &&
+    formCheck.get('confirmSenha')?.errors?.['passwordMismatch']" class="textBody">
+            As senhas não coincidem!
+          </span>
+        </div>
+
+
+
+
 
       </div>
 
@@ -118,7 +140,7 @@
 
     </div>
 
-    
+
     <div class="po-row d-flex justify-content-end pt-2 divToast">
       <po-toaster class="po-md-6 toastMsg" [p-hide]="hideToast" [p-message]="msgToast" [p-type]="type"></po-toaster>
     </div>

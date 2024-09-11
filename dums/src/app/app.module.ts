@@ -26,6 +26,7 @@ import { tokenInterceptor } from './Interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalUpdateComponent } from './Components/modal-update/modal-update.component';
 import { ModalDeleteComponent } from './Components/modal-delete/modal-delete.component';
+import { TransportadoraComponent } from './Pages/transportadora/transportadora.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ModalDeleteComponent } from './Components/modal-delete/modal-delete.com
     FormEmitenteComponent,
     ModalUpdateComponent,
     ModalDeleteComponent,
+    TransportadoraComponent,
   ],
   imports: [
     BrowserModule,

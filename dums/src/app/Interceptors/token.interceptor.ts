@@ -10,7 +10,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   const authToken = authTokenService.getToken();
   const urlPath = new URL(req.url).pathname;
-  const requiresAuth = urlPath.includes('/emitente');
+  const requiresAuth = urlPath.includes('/emitente') || urlPath.includes('/cep');
 
   const authReq =
     authToken && requiresAuth
