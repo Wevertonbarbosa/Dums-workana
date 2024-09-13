@@ -173,6 +173,24 @@ po-search {
   font-family: "Montserrat", sans-serif;
 }
 
+
+
+.po-toaster-warning .po-toaster-icon {
+  background-color: #be3e37;
+  color: white;
+}
+
+.po-toaster-warning .po-toaster-divider {
+  border-color: #e3aeab;
+}
+
+.po-toaster-warning {
+  border-color: #e3aeab;
+  background-color: #f6e6e5;
+}
+
+
+
 @media (max-width: 1024px) {
   .buttonLarge {
     --padding: 0px 100px;

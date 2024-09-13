@@ -79,7 +79,10 @@ export class ModalUpdateComponent {
   validateRange(field: string) {
     const value = this.formCheck.get(field)?.value;
     if (value > 32767) {
-      this.poNotification.error('O valor não pode ser maior que 32767.');
+      this.poNotification.warning({
+        message: 'O valor não pode ser maior que 32767.',
+        duration: 5000,
+      });
 
       this.formCheck.get(field)?.setValue(null);
     }
@@ -94,18 +97,25 @@ export class ModalUpdateComponent {
           next: (value) => {
             this.close();
             this.emitenteUpdated.emit();
-            this.poNotification.success('Emitente atualizado com sucesso!');
+            this.poNotification.success({
+              message: 'Emitente atualizado com sucesso!',
+              duration: 3000,
+            });
           },
           error: (err) => {
             console.error('Erro ao atualizar emitente:', err);
-            this.poNotification.error('Erro ao atualizar o emitente.');
+            this.poNotification.warning({
+              message: 'Erro ao atualizar o emitente.',
+              duration: 5000,
+            });
           },
         });
       } else {
         console.error('Formulário inválido');
-        this.poNotification.error(
-          'Por favor, preencha o formulário corretamente.'
-        );
+        this.poNotification.warning({
+          message: 'Por favor, preencha o formulário corretamente.',
+          duration: 5000,
+        });
       }
     },
     label: 'Confirmar',
@@ -124,7 +134,10 @@ export class ModalUpdateComponent {
       this.cepService.getCep(cep).subscribe({
         next: (value) => {
           if (value.erro) {
-            this.poNotification.error('CEP não encontrado!');
+            this.poNotification.warning({
+              message: 'CEP não encontrado!',
+              duration: 5000,
+            });
             this.formCheck.patchValue({ endereco: { cep: '' } });
           } else {
             this.formCheck.patchValue({
@@ -139,7 +152,10 @@ export class ModalUpdateComponent {
         },
         error: (err) => {
           console.error('Erro ao buscar dados do CEP:', err);
-          this.poNotification.error('Erro ao buscar dados do CEP!');
+          this.poNotification.warning({
+            message: 'Erro ao buscar dados do CEP!',
+            duration: 5000,
+          });
         },
       });
     } else {

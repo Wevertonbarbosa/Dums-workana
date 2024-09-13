@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   PoDividerModule,
@@ -10,7 +10,6 @@ import {
   PoTableAction,
   PoTableColumn,
   PoTableColumnSpacing,
-  PoTableLiterals,
   PoToasterType,
 } from '@po-ui/ng-components';
 import { DataEmitenteService } from '../../Services/data-emitente.service';
@@ -114,51 +113,6 @@ export class FormEmitenteComponent implements OnInit {
     this.modalUpdateComponent.open(value);
   }
 
-  sendEmitente() {
-    try {
-      this.checkLoading = true;
-      this.loadingTable = true;
-      if (this.formCheck.valid) {
-        this.service.postEmitente(this.formCheck.value).subscribe({
-          next: () => {
-            this.formCheck.reset();
-            this.msgToast = 'Emitente registrado';
-            this.hideToast = false;
-
-            setTimeout(() => {
-              this.hideToast = true;
-            }, 3000);
-          },
-          error: (err) => {
-            console.error('Erro ao registrar emitente:', err);
-            this.type = PoToasterType.Error;
-            this.msgToast = 'Erro ao registrar o usuário!';
-            this.hideToast = false;
-
-            setTimeout(() => {
-              this.hideToast = true;
-            }, 5000);
-          },
-        });
-      }
-    } catch (error) {
-      console.error('Erro ao enviar o emitente:', error);
-
-      this.type = PoToasterType.Error;
-      this.msgToast = 'Erro ao enviar o emitente!';
-      this.hideToast = false;
-
-      setTimeout(() => {
-        this.hideToast = true;
-      }, 5000);
-    } finally {
-      setTimeout(() => {
-        this.loadingTable = false;
-        this.checkLoading = false;
-      }, 2000);
-    }
-  }
-
   confirmAddEmitente: PoModalAction = {
     action: () => {
       if (this.formCheck.valid) {
@@ -170,20 +124,25 @@ export class FormEmitenteComponent implements OnInit {
             this.loadEmitentes();
             this.closeModal();
 
-            this.poNotification.success('Emitente adicionado!');
+            this.poNotification.success({
+              message: 'Emitente adicionado!',
+              duration: 3000,
+            });
           },
           error: (err) => {
             console.error('Erro ao enviar Emitente', err);
 
-            this.poNotification.error(
-              'Erro na requisição para envio do emitente!'
-            );
+            this.poNotification.warning({
+              message: 'Erro na requisição para envio do emitente!',
+              duration: 5000,
+            });
           },
         });
       } else {
-        this.poNotification.error(
-          'Por favor, preencha o formulário corretamente.'
-        );
+        this.poNotification.warning({
+          message: 'Preencha o formulário corretamente!',
+          duration: 5000,
+        });
       }
     },
     label: 'Confirmar',
@@ -243,7 +202,10 @@ export class FormEmitenteComponent implements OnInit {
         console.error('Erro ao buscar emitentes', err);
         this.hasItems = false;
 
-        this.poNotification.error('Erro ao buscar emitentes!');
+        this.poNotification.warning({
+          message: 'Erro ao buscar emitentes!',
+          duration: 5000,
+        });
       },
     });
   }
@@ -251,7 +213,10 @@ export class FormEmitenteComponent implements OnInit {
   validateRange(field: string) {
     const value = this.formCheck.get(field)?.value;
     if (value > 32767) {
-      this.poNotification.error('O valor não pode ser maior que 32767.');
+      this.poNotification.warning({
+        message: 'O valor não pode ser maior que 32767.',
+        duration: 5000,
+      });
       this.formCheck.get(field)?.setValue(null);
     }
   }
@@ -262,7 +227,10 @@ export class FormEmitenteComponent implements OnInit {
       this.cepService.getCep(cep).subscribe({
         next: (value) => {
           if (value.erro) {
-            this.poNotification.error('CEP não encontrado!');
+            this.poNotification.warning({
+              message: 'CEP não encontrado!',
+              duration: 5000,
+            });
             this.formCheck.patchValue({ endereco: { cep: '' } });
           } else {
             this.formCheck.patchValue({
@@ -277,7 +245,10 @@ export class FormEmitenteComponent implements OnInit {
         },
         error: (err) => {
           console.error('Erro ao buscar dados do CEP:', err);
-          this.poNotification.error('Erro ao buscar dados do CEP!');
+          this.poNotification.warning({
+            message: 'Erro ao buscar dados do CEP!',
+            duration: 5000,
+          });
         },
       });
     } else {

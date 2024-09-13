@@ -17,7 +17,6 @@ export class ModalDeleteComponent {
 
   @Output() onDelete: EventEmitter<void> = new EventEmitter();
 
-
   private deleteId!: number;
 
   constructor(
@@ -39,12 +38,18 @@ export class ModalDeleteComponent {
       this.service.deleteEmitente(this.deleteId).subscribe({
         next: () => {
           this.close();
-          this.poNotification.success('Emitente excluído com sucesso!');
+          this.poNotification.success({
+            message: 'Emitente excluído com sucesso!',
+            duration: 3000,
+          });
           this.onDelete.emit();
         },
         error: (err) => {
           console.error('Erro ao excluir emitente:', err);
-          this.poNotification.error('Erro ao excluir o emitente.');
+          this.poNotification.warning({
+            message: 'Erro ao excluir o emitente.',
+            duration: 5000,
+          });
         },
       });
     },
